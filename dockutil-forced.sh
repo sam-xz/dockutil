@@ -24,11 +24,6 @@ else
     installer -pkg "/tmp/dockutil.pkg" -target /
 fi
 
-echo "[SLEEP] Waiting 3.5 minutes for all other apps to install"
-sleep 210
-
-
-
 #CurrUserHome="/Users/$CurrUser"
 #UserPlist=$CurrUserHome/Library/Preferences/com.apple.dock.plist
 #Uncomment the above if you want to set the dock just for the current user and change --allhome to $UserPlist on all lines
