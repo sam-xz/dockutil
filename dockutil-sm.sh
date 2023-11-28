@@ -3,6 +3,16 @@
 #Install dockutil if not found and configure apps, applicatons stack, downloads fan sorted by date added. Recents left on by default. 
 #Checks app if is installed first before adding to dock to avoid the "?" icon if missing.
 
+# some vars
+CurrUser=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+killall="/usr/bin/killall"
+
+# Check if the script has already been run for the current user
+if [ -f "Users/$CurrUser/jumpcloud/.dock_setup_completed" ]; then
+    echo "Dock setup already completed for this user. Exiting..."
+    exit 0
+fi
+
 # check if dockutil is installed, install if it's not.
 dockutil="/usr/local/bin/dockutil"
 if [[ -x $dockutil ]]; then
@@ -17,11 +27,9 @@ fi
 echo "[SLEEP] Waiting 3.5 minutes for all other apps to install"
 sleep 210
 
-# vars to start script and set current user / user dock
-killall="/usr/bin/killall"
-CurrUser=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ { print $3 }' )
-CurrUserHome="/Users/$CurrUser"
 
+
+#CurrUserHome="/Users/$CurrUser"
 #UserPlist=$CurrUserHome/Library/Preferences/com.apple.dock.plist
 #Uncomment the above if you want to set the dock just for the current user and change --allhome to $UserPlist on all lines
 ################################################################################
@@ -54,5 +62,9 @@ sudo -u $CurrUser $dockutil --add "/Applications" --section others --view grid -
 sudo -u $CurrUser $dockutil --add "~/Downloads" --section others --view fan --display folder --sort dateadded --no-restart --allhomes
 sudo -u $CurrUser $dockutil --add "/Applications/System Settings.app" --no-restart --allhomes
 sudo -u $CurrUser $killall Dock
+
+# Create a file to mark that the script has been run for this user
+mkdir "/Users/$CurrUser/jumpcloud"
+touch "Users/$CurrUser/jumpcloud/.dock_setup_completed"
 
 exit 0
