@@ -1,6 +1,6 @@
 #!/bin/bash
 #Samuel Marino 28/Nov/2023
-#Install dockutil if not found and configure apps, applicatons stack, downloads fan sorted by date added. Recents left on by default. 
+#Install dockutil if not found and configure apps, applications stack, downloads fan sorted by date added. Recents left on by default. 
 #Checks app if is installed first before adding to dock to avoid the "?" icon if missing.
 
 # some vars
