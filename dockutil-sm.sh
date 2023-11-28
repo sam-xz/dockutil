@@ -8,8 +8,8 @@ CurrUser=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /log
 killall="/usr/bin/killall"
 
 # Check if the script has already been run for the current user
-if [ -f "Users/$CurrUser/jumpcloud/.dock_setup_completed" ]; then
-    echo "Dock setup already completed for this user. Exiting..."
+if [ -f "/Users/$CurrUser/jumpcloud/.dock_setup_completed" ]; then
+    echo "[EXIT] Default Dock setup already completed for this user. Exiting..."
     exit 0
 fi
 
@@ -57,14 +57,14 @@ add_app_to_dock "/Applications/Notes.app"
 add_app_to_dock "/Applications/OpenVPN Connect/OpenVPN Connect.app"
 add_app_to_dock "/Applications/1Password.app"
 add_app_to_dock "/Applications/1Password 7.app"
+add_app_to_dock "System/Applications/System Settings.app"
 
 sudo -u $CurrUser $dockutil --add "/Applications" --section others --view grid --display stack --sort name --no-restart --allhomes
 sudo -u $CurrUser $dockutil --add "~/Downloads" --section others --view fan --display folder --sort dateadded --no-restart --allhomes
-sudo -u $CurrUser $dockutil --add "/Applications/System Settings.app" --no-restart --allhomes
 sudo -u $CurrUser $killall Dock
 
 # Create a file to mark that the script has been run for this user
-mkdir "/Users/$CurrUser/jumpcloud"
-touch "Users/$CurrUser/jumpcloud/.dock_setup_completed"
+mkdir -p "/Users/$CurrUser/jumpcloud"
+touch "/Users/$CurrUser/jumpcloud/.dock_setup_completed"
 
 exit 0
