@@ -57,7 +57,7 @@ add_app_to_dock "/Applications/Notes.app"
 add_app_to_dock "/Applications/OpenVPN Connect/OpenVPN Connect.app"
 add_app_to_dock "/Applications/1Password.app"
 add_app_to_dock "/Applications/1Password 7.app"
-add_app_to_dock "System/Applications/System Settings.app"
+add_app_to_dock "/System/Applications/System Settings.app"
 
 sudo -u $CurrUser $dockutil --add "/Applications" --section others --view grid --display stack --sort name --no-restart --allhomes
 sudo -u $CurrUser $dockutil --add "~/Downloads" --section others --view fan --display folder --sort dateadded --no-restart --allhomes
